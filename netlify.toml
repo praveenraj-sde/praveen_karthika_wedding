@@ -5,7 +5,13 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# /wedding → venue Google Maps (permanent redirect)
+# / and /wedding → venue Google Maps
+[[redirects]]
+  from = "/"
+  to = "https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/wedding"
   to = "https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
