@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# /wedding → venue Google Maps (permanent redirect)
+[[redirects]]
+  from = "/wedding"
+  to = "https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
+  status = 301
+  force = true
