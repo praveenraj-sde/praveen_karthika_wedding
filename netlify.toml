@@ -5,15 +5,8 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# / and /wedding → venue Google Maps
-[[redirects]]
-  from = "/"
-  to = "https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
-  status = 301
-  force = true
-
+# /wedding → root (same invitation page)
 [[redirects]]
   from = "/wedding"
-  to = "https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
+  to = "/"
   status = 301
-  force = true

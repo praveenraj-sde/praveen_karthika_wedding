@@ -1,0 +1,59 @@
+---
+import WeddingLayout from '../layouts/WeddingLayout.astro';
+import '../styles/global.css';
+---
+
+<WeddingLayout title="Thank You — Praveen & Karthika">
+  <div class="thanks-wrap">
+    <img src="/wedding/elements/divider-heart-brown.png" class="thanks-icon" alt="" />
+    <h1 class="thanks-heading">Thank You!</h1>
+    <p class="thanks-sub">
+      Your response has been received.<br />
+      We can't wait to celebrate with you! 🎉
+    </p>
+    <a href="/" class="thanks-back">← Back to Invitation</a>
+  </div>
+</WeddingLayout>
+
+<style is:global>
+  .thanks-wrap {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    gap: 1.4rem;
+    background: var(--dark);
+  }
+  .thanks-icon { width: 130px; opacity: 0.55; }
+  .thanks-heading {
+    font-family: var(--fs);
+    font-size: clamp(3rem, 10vw, 5rem);
+    color: var(--gold);
+    -webkit-text-stroke: 0.5px rgba(201,162,85,0.35);
+    line-height: 1;
+  }
+  .thanks-sub {
+    font-family: var(--fh);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 380px;
+    line-height: 1.7;
+  }
+  .thanks-back {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.6rem 1.5rem;
+    border: 1.5px solid rgba(201,162,85,0.35);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background 0.18s, color 0.18s;
+  }
+  .thanks-back:hover { background: var(--gold); color: var(--dark); }
+</style>

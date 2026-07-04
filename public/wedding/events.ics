@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Praveen & Karthika Wedding 2026//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Praveen & Karthika Wedding
+BEGIN:VEVENT
+UID:engagement-praveen-karthika-20260912@wedding
+SUMMARY:Praveen & Karthika – Engagement
+DTSTART:20260912T133000Z
+DTEND:20260912T143000Z
+LOCATION:Sathyabama Kalyana Mandapam\, SH-44\, 26/99\, Ettayapuram Road\, Kovilpatti – 628501\, Tamilnadu
+DESCRIPTION:Engagement ceremony of Praveen Raj and Karthika.\nTime: 7:00 PM – 8:00 PM IST
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+BEGIN:VEVENT
+UID:wedding-praveen-karthika-20260913@wedding
+SUMMARY:Praveen & Karthika – Wedding
+DTSTART:20260913T013000Z
+DTEND:20260913T033000Z
+LOCATION:Sathyabama Kalyana Mandapam\, SH-44\, 26/99\, Ettayapuram Road\, Kovilpatti – 628501\, Tamilnadu
+DESCRIPTION:Wedding ceremony of Praveen Raj and Karthika.\nMuhurtham: 7:00 AM – 9:00 AM IST
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+END:VCALENDAR

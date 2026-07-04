@@ -1,0 +1,99 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Praveen & Karthika — Wedding · 13 Sep 2026',
+  description = 'Join us to celebrate the wedding of Praveen Raj and Karthika on 13th September 2026 at Sathyabama Kalyana Mandapam, Kovilpatti.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --dark:       #0c0703;
+    --dark-2:     #160b06;
+    --dark-3:     #1e0f08;
+    --gold:       #c9a255;
+    --gold-dim:   rgba(201, 162, 85, 0.15);
+    --cream:      #f9f1e3;
+    --ink:        #4a2535;
+    --text-light: #f0dfc8;
+    --text-muted: rgba(240, 223, 200, 0.50);
+    --fs: 'Great Vibes', cursive;
+    --fh: 'Cormorant Garamond', Georgia, serif;
+    --fb: 'Lora', serif;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--dark);
+    color: var(--text-light);
+    font-family: var(--fb);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.72s ease, transform 0.72s ease;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  .rv2 { transition-delay: 0.12s; }
+  .rv3 { transition-delay: 0.24s; }
+  .rv4 { transition-delay: 0.36s; }
+  .rv5 { transition-delay: 0.48s; }
+
+  /* Shared section atoms */
+  .section-tag {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .section-tag-muted { color: rgba(201, 162, 85, 0.6); }
+
+  .section-heading {
+    font-family: var(--fh);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.1;
+  }
+  .section-heading-dark  { color: var(--ink); }
+  .section-heading-light { color: var(--text-light); }
+
+  .section-rule {
+    width: 56px; height: 1px;
+    margin: 0.9rem auto 2.75rem;
+  }
+  .rule-ink  { background: rgba(74, 37, 53, 0.25); }
+  .rule-gold { background: rgba(201, 162, 85, 0.45); }
+</style>

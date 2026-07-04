@@ -1,25 +1,932 @@
 ---
+import WeddingLayout from '../layouts/WeddingLayout.astro';
 import '../styles/global.css';
+
+const gcal = (text: string, start: string, end: string, details: string) =>
+  `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${start}%2F${end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent('Sathyabama Kalyana Mandapam, SH-44, 26/99, Ettayapuram Road, Kovilpatti – 628501')}`;
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Praveen Raj</title>
-  </head>
-  <body style="font-family: sans-serif; text-align: center; padding: 4rem 1rem; background: #f9f1e3; color: #4a2535; min-height: 100vh; margin: 0; box-sizing: border-box;">
-    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 700;">Praveen Raj</h1>
-    <p style="margin-bottom: 2.5rem; color: #7a5565; font-size: 1.05rem;">Software Engineer</p>
-    <a
-      href="/wedding"
-      style="display: inline-block; padding: 0.6rem 1.6rem; border: 1.5px solid #4a2535; color: #4a2535; text-decoration: none; font-size: 0.95rem; letter-spacing: 0.04em; transition: background 0.15s, color 0.15s;"
-      onmouseover="this.style.background='#4a2535';this.style.color='#f9f1e3';"
-      onmouseout="this.style.background='transparent';this.style.color='#4a2535';"
-    >
-      Wedding Invitation
-    </a>
-  </body>
-</html>
+<WeddingLayout>
+
+  <!-- ── Floating RSVP pill ───────────────────────────────── -->
+  <a href="#rsvp" class="rsvp-fab" id="rsvp-fab" aria-label="RSVP">RSVP</a>
+
+  <!-- ══════════════════════════════════════════════════════
+       1. HERO
+  ══════════════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <!-- Left: text -->
+    <div class="hero-text">
+      <img src="/wedding/elements/pk-logo-brown.png" class="hero-logo reveal" alt="PK monogram" />
+
+      <p class="hero-tagline reveal rv2">Together with their families</p>
+
+      <div class="hero-names reveal rv3">
+        <span class="hname">Praveen Raj</span>
+        <span class="weds-row">
+          <span class="weds-line"></span>
+          <em>weds</em>
+          <span class="weds-line"></span>
+        </span>
+        <span class="hname">Karthika</span>
+      </div>
+
+      <div class="hero-meta reveal rv4">
+        <img src="/wedding/elements/divider2-brown.png" class="hero-divi" alt="" aria-hidden="true" />
+        <p class="hero-date">13th September 2026</p>
+        <p class="hero-venue">Sathyabama Kalyana Mandapam · Kovilpatti</p>
+      </div>
+
+      <div class="countdown reveal rv5" id="countdown" aria-live="polite">
+        <div class="cu"><span class="cn" id="cd-d">--</span><span class="cl">Days</span></div>
+        <span class="cs" aria-hidden="true">:</span>
+        <div class="cu"><span class="cn" id="cd-h">--</span><span class="cl">Hrs</span></div>
+        <span class="cs" aria-hidden="true">:</span>
+        <div class="cu"><span class="cn" id="cd-m">--</span><span class="cl">Min</span></div>
+        <span class="cs" aria-hidden="true">:</span>
+        <div class="cu"><span class="cn" id="cd-s">--</span><span class="cl">Sec</span></div>
+      </div>
+
+      <div class="hero-cta reveal rv5">
+        <a href="#rsvp" class="btn-gold">RSVP Now</a>
+        <a href="#events" class="btn-outline">View Events ↓</a>
+      </div>
+    </div>
+
+    <!-- Right: couple art -->
+    <div class="hero-art" aria-hidden="true">
+      <img src="/wedding/couple-pencil-art-brown.png" alt="Praveen &amp; Karthika" />
+    </div>
+
+    <a class="scroll-hint" href="#events" aria-label="Scroll to events">↓</a>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       2. EVENTS
+  ══════════════════════════════════════════════════════ -->
+  <section class="events-sec" id="events">
+    <div class="sec-wrap">
+      <p class="section-tag reveal">Save the Date</p>
+      <h2 class="section-heading section-heading-dark reveal rv2">Celebrate With Us</h2>
+      <div class="section-rule rule-ink reveal rv2"></div>
+
+      <div class="ev-grid">
+        <!-- Engagement -->
+        <article class="ev-card reveal">
+          <img src="/wedding/elements/rings-brown.png" class="ev-icon" alt="" />
+          <h3 class="ev-title">Engagement</h3>
+          <p class="ev-date">Saturday, 12th September 2026</p>
+          <p class="ev-time">7:00 PM – 8:00 PM</p>
+          <div class="ev-venue">
+            <p class="ev-vname">Sathyabama Kalyana Mandapam</p>
+            <p class="ev-vaddr">SH-44, 26/99, Ettayapuram Road<br />Kovilpatti – 628501, Tamilnadu</p>
+          </div>
+          <div class="ev-actions">
+            <a href={gcal('Praveen & Karthika – Engagement','20260912T133000Z','20260912T143000Z','Engagement ceremony. Time: 7:00 PM – 8:00 PM IST')}
+               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-cal">
+              📅 Google Calendar
+            </a>
+            <a href="/wedding/events.ics" download class="ev-btn ev-btn-cal">
+              ⬇ Apple / Outlook (.ics)
+            </a>
+            <a href="https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
+               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-map">
+              📍 Open in Maps
+            </a>
+          </div>
+        </article>
+
+        <!-- Wedding -->
+        <article class="ev-card reveal rv2">
+          <img src="/wedding/elements/wedding-couple-brown.png" class="ev-icon" alt="" />
+          <h3 class="ev-title">Wedding</h3>
+          <p class="ev-date">Sunday, 13th September 2026</p>
+          <p class="ev-time">Muhurtham: 7:00 AM – 9:00 AM</p>
+          <div class="ev-venue">
+            <p class="ev-vname">Sathyabama Kalyana Mandapam</p>
+            <p class="ev-vaddr">SH-44, 26/99, Ettayapuram Road<br />Kovilpatti – 628501, Tamilnadu</p>
+          </div>
+          <div class="ev-actions">
+            <a href={gcal('Praveen & Karthika – Wedding','20260913T013000Z','20260913T033000Z','Wedding ceremony. Muhurtham: 7:00 AM – 9:00 AM IST')}
+               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-cal">
+              📅 Google Calendar
+            </a>
+            <a href="/wedding/events.ics" download class="ev-btn ev-btn-cal">
+              ⬇ Apple / Outlook (.ics)
+            </a>
+            <a href="https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
+               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-map">
+              📍 Open in Maps
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       3. RSVP  — MOST PROMINENT
+  ══════════════════════════════════════════════════════ -->
+  <section class="rsvp-sec" id="rsvp">
+    <div class="rsvp-bg-accent" aria-hidden="true"></div>
+    <div class="sec-wrap rsvp-wrap">
+      <p class="section-tag section-tag-muted reveal">You're Invited</p>
+      <h2 class="rsvp-heading reveal rv2">Will You Join Us?</h2>
+      <p class="rsvp-sub reveal rv3">Please respond by <strong>1st August 2026</strong></p>
+
+      <div class="rsvp-card reveal rv3">
+        <form
+          name="rsvp"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/success"
+          class="rsvp-form"
+        >
+          <input type="hidden" name="form-name" value="rsvp" />
+          <p class="bot-trap"><label>Skip: <input name="bot-field" /></label></p>
+
+          <!-- Name -->
+          <div class="field">
+            <label class="flabel" for="f-name">Full Name *</label>
+            <input class="finput" type="text" id="f-name" name="name" placeholder="Ramesh Kumar" required />
+          </div>
+
+          <!-- Phone -->
+          <div class="field">
+            <label class="flabel" for="f-phone">Phone Number *</label>
+            <input class="finput" type="tel" id="f-phone" name="phone" placeholder="+91 98765 43210" required />
+          </div>
+
+          <!-- Attending -->
+          <div class="field">
+            <span class="flabel">Will You Attend? *</span>
+            <div class="pills">
+              <input type="radio" id="att-y" name="attending" value="Yes — I'll be there!" required />
+              <label for="att-y">Yes 🎉</label>
+              <input type="radio" id="att-m" name="attending" value="Maybe" />
+              <label for="att-m">Maybe</label>
+              <input type="radio" id="att-n" name="attending" value="Can't make it" />
+              <label for="att-n">Can't make it</label>
+            </div>
+          </div>
+
+          <!-- Guest count -->
+          <div class="field">
+            <span class="flabel">Family Members Coming</span>
+            <div class="pills">
+              <input type="radio" id="g1" name="guests" value="1" /><label for="g1">1</label>
+              <input type="radio" id="g2" name="guests" value="2" /><label for="g2">2</label>
+              <input type="radio" id="g3" name="guests" value="3" /><label for="g3">3</label>
+              <input type="radio" id="g4" name="guests" value="4" /><label for="g4">4</label>
+              <input type="radio" id="g5" name="guests" value="5+" /><label for="g5">5+</label>
+            </div>
+          </div>
+
+          <!-- Room arrangements -->
+          <div class="field">
+            <span class="flabel">Room Arrangements Needed?</span>
+            <div class="pills">
+              <input type="radio" id="r-y" name="room" value="Yes" /><label for="r-y">Yes</label>
+              <input type="radio" id="r-n" name="room" value="No" checked /><label for="r-n">No</label>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="field">
+            <label class="flabel" for="f-msg">Message for the Couple <span class="optional">(optional)</span></label>
+            <textarea class="finput ftarea" id="f-msg" name="message" rows="3" placeholder="Write a blessing or message…"></textarea>
+          </div>
+
+          <button type="submit" class="rsvp-btn">Confirm Attendance ✓</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       4. PHOTO UPLOAD  — PROMINENTLY PLACED
+  ══════════════════════════════════════════════════════ -->
+  <section class="upload-sec" id="upload">
+    <div class="upload-inner">
+      <div class="upload-icon-wrap reveal" aria-hidden="true">📸</div>
+      <h2 class="section-heading section-heading-light reveal rv2">Share the Moment</h2>
+      <p class="upload-sub reveal rv3">
+        Captured something beautiful at the celebration?<br />
+        Upload your photos &amp; videos — let's build our shared memory together.
+      </p>
+      <a
+        href="#"
+        id="drive-link"
+        class="upload-btn reveal rv4"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Upload Photos &amp; Videos ↗
+      </a>
+      <p class="upload-note reveal rv5">Link will go live on the day of the event</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       5. OUR STORY / GALLERY
+  ══════════════════════════════════════════════════════ -->
+  <section class="gallery-sec" id="gallery">
+    <div class="sec-wrap" style="text-align:center">
+      <p class="section-tag section-tag-muted reveal">Memories</p>
+      <h2 class="section-heading section-heading-light reveal rv2">Our Story</h2>
+      <div class="section-rule rule-gold reveal rv2"></div>
+
+      <div class="gallery-grid">
+        <div class="gcard reveal">
+          <div class="gph"><img src="/wedding/elements/divider-heart-brown.png" class="gph-icon" alt="" /></div>
+          <span class="glabel">First Meeting</span>
+        </div>
+        <div class="gcard reveal rv2">
+          <div class="gph"><img src="/wedding/elements/rings-brown.png" class="gph-icon" alt="" /></div>
+          <span class="glabel">The Proposal</span>
+        </div>
+        <div class="gcard reveal rv3">
+          <div class="gph"><img src="/wedding/elements/butterfly-brown.png" class="gph-icon" alt="" /></div>
+          <span class="glabel">Engagement Day</span>
+        </div>
+        <div class="gcard reveal rv2">
+          <div class="gph"><img src="/wedding/elements/wedding-couple-brown.png" class="gph-icon" alt="" /></div>
+          <span class="glabel">Celebrations</span>
+        </div>
+        <div class="gcard reveal rv3">
+          <div class="gph"><img src="/wedding/elements/divider-heart-brown.png" class="gph-icon" alt="" /></div>
+          <span class="glabel">Together</span>
+        </div>
+        <div class="gcard reveal rv4">
+          <div class="gph"><img src="/wedding/elements/pk-logo-brown.png" class="gph-icon" alt="" /></div>
+          <span class="glabel">Forever Begins</span>
+        </div>
+      </div>
+
+      <p class="gallery-note reveal">Photos coming soon — stay tuned! ✨</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="/wedding/elements/pk-logo-brown.png" class="footer-logo" alt="PK" />
+      <p class="footer-names">Praveen Raj &amp; Karthika</p>
+      <p class="footer-date">13th September 2026 · Kovilpatti</p>
+      <div class="footer-contacts">
+        <p>For enquiries:</p>
+        <a class="footer-tel" href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX (Bride's family)</a>
+        <a class="footer-tel" href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX (Groom's family)</a>
+      </div>
+      <a
+        href="https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-map"
+      >📍 View Venue on Map</a>
+      <p class="footer-copy">Made with love · Praveen &amp; Karthika · 2026</p>
+    </div>
+  </footer>
+
+</WeddingLayout>
+
+<!-- ════════════════════════════════════════════════════════
+     STYLES
+════════════════════════════════════════════════════════ -->
+<style is:global>
+
+/* ─── HERO ────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 4vw 5rem 7vw;
+  gap: 1.3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-logo { width: 62px; opacity: 0.88; }
+
+.hero-tagline {
+  font-family: var(--fh);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.hero-names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.hname {
+  font-family: var(--fs);
+  font-size: clamp(2.8rem, 4.6vw, 4.4rem);
+  color: var(--text-light);
+  line-height: 1;
+  -webkit-text-stroke: 0.5px rgba(201,162,85,0.25);
+}
+
+.weds-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--fh);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--gold);
+  margin: 0.3rem 0 0.35rem;
+}
+.weds-line {
+  flex: 1; max-width: 36px;
+  height: 1px;
+  background: rgba(201,162,85,0.45);
+}
+
+.hero-meta { display: flex; flex-direction: column; gap: 0.3rem; }
+.hero-divi { width: 96px; opacity: 0.45; }
+.hero-date {
+  font-family: var(--fh);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+.hero-venue {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Countdown */
+.countdown { display: flex; align-items: center; gap: 0.45rem; }
+.cu {
+  display: flex; flex-direction: column; align-items: center;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,162,85,0.22);
+  padding: 0.6rem 0.85rem;
+  min-width: 54px;
+}
+.cn {
+  font-family: var(--fh);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.cl {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.18rem;
+}
+.cs {
+  font-size: 1.3rem;
+  color: var(--gold);
+  opacity: 0.45;
+  line-height: 1;
+  margin-bottom: 0.9rem;
+}
+
+/* CTA buttons */
+.hero-cta { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+.btn-gold {
+  display: inline-block;
+  padding: 0.72rem 1.8rem;
+  background: var(--gold);
+  color: var(--dark);
+  font-family: var(--fb);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-gold:hover { background: #dbb96a; transform: translateY(-1px); }
+
+.btn-outline {
+  display: inline-block;
+  padding: 0.72rem 1.5rem;
+  border: 1.5px solid rgba(240,223,200,0.28);
+  color: var(--text-light);
+  font-size: 0.8rem;
+  letter-spacing: 0.07em;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Hero art panel */
+.hero-art {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-art::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 45%;
+  background: linear-gradient(to right, var(--dark), transparent);
+  z-index: 1;
+}
+.hero-art::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, var(--dark));
+  z-index: 1;
+}
+.hero-art img {
+  height: 90vh;
+  max-height: 720px;
+  width: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  opacity: 0.88;
+  position: relative;
+  z-index: 0;
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--gold);
+  font-size: 1.4rem;
+  text-decoration: none;
+  animation: bounce 2s ease-in-out infinite;
+  z-index: 5;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(7px); }
+}
+
+/* Mobile hero */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .hero-text {
+    padding: 5.5rem 1.5rem 2.5rem;
+    order: 1;
+    gap: 1.1rem;
+  }
+  .hero-art {
+    order: 2;
+    height: 58vw;
+    min-height: 250px;
+    max-height: 420px;
+  }
+  .hero-art::before { display: none; }
+  .hero-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    opacity: 0.72;
+  }
+  .hname { font-size: clamp(2.6rem, 12vw, 3.6rem); }
+  .countdown { gap: 0.28rem; }
+  .cu { min-width: 46px; padding: 0.5rem 0.6rem; }
+  .cn { font-size: 1.25rem; }
+}
+
+/* ─── EVENTS ──────────────────────────────────────────── */
+.events-sec {
+  background: var(--cream);
+  color: var(--ink);
+  padding: 5.5rem 1.5rem;
+  text-align: center;
+}
+.sec-wrap { max-width: 900px; margin: 0 auto; }
+
+.ev-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 0.5rem;
+}
+@media (max-width: 640px) { .ev-grid { grid-template-columns: 1fr; } }
+
+.ev-card {
+  background: #fff;
+  padding: 2.5rem 1.75rem;
+  text-align: center;
+  box-shadow: 0 6px 32px rgba(74,37,53,0.08);
+  border-top: 3px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.ev-icon { height: 54px; width: auto; margin: 0 auto 0.75rem; opacity: 0.82; }
+.ev-title {
+  font-family: var(--fs);
+  font-size: 2rem;
+  color: var(--ink);
+  -webkit-text-stroke: 0.4px var(--ink);
+  line-height: 1.05;
+  margin-bottom: 0.3rem;
+}
+.ev-date {
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.ev-time { font-size: 0.82rem; color: rgba(74,37,53,0.6); }
+.ev-venue {
+  margin: 0.85rem 0;
+  padding: 0.75rem;
+  background: var(--cream);
+  border-left: 2px solid rgba(201,162,85,0.35);
+  text-align: left;
+}
+.ev-vname { font-family: var(--fb); font-weight: 700; font-size: 0.88rem; color: var(--ink); }
+.ev-vaddr { font-size: 0.78rem; color: rgba(74,37,53,0.58); line-height: 1.55; margin-top: 0.25rem; }
+
+.ev-actions { display: flex; flex-direction: column; gap: 0.55rem; margin-top: auto; }
+.ev-btn {
+  display: block;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.18s, color 0.18s;
+}
+.ev-btn-cal {
+  border: 1.5px solid rgba(74,37,53,0.3);
+  color: var(--ink);
+}
+.ev-btn-cal:hover { background: var(--ink); color: var(--cream); }
+.ev-btn-map {
+  background: var(--ink);
+  color: var(--cream);
+  border: 1.5px solid var(--ink);
+}
+.ev-btn-map:hover { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+
+/* ─── RSVP ────────────────────────────────────────────── */
+.rsvp-sec {
+  position: relative;
+  background: var(--dark-3);
+  padding: 6.5rem 1.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+.rsvp-sec::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+.rsvp-sec::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+/* Large decorative text behind heading */
+.rsvp-bg-accent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--fs);
+  font-size: clamp(8rem, 20vw, 18rem);
+  color: rgba(201,162,85,0.04);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+.rsvp-bg-accent::before { content: 'RSVP'; }
+
+.rsvp-wrap { max-width: 580px; position: relative; z-index: 1; }
+
+.rsvp-heading {
+  font-family: var(--fs);
+  font-size: clamp(2.8rem, 8vw, 4.5rem);
+  color: var(--gold);
+  -webkit-text-stroke: 0.5px rgba(201,162,85,0.35);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.rsvp-sub {
+  font-family: var(--fh);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 2.75rem;
+}
+.rsvp-sub strong { color: var(--text-light); font-style: normal; }
+
+.rsvp-card {
+  background: var(--cream);
+  padding: 2.5rem 2rem;
+  text-align: left;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+@media (max-width: 480px) { .rsvp-card { padding: 1.75rem 1.25rem; } }
+
+.rsvp-form { display: flex; flex-direction: column; gap: 1.5rem; }
+.bot-trap { display: none; }
+
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.flabel {
+  font-family: var(--fb);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.optional { font-weight: 400; letter-spacing: 0; text-transform: none; opacity: 0.55; font-size: 0.85em; }
+
+.finput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid rgba(74,37,53,0.2);
+  background: #fff;
+  font-family: var(--fb);
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  transition: border-color 0.2s;
+}
+.finput:focus { border-color: var(--gold); }
+.ftarea { resize: vertical; min-height: 85px; }
+
+/* Pill radio buttons */
+.pills { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.1rem; }
+.pills input[type="radio"] { display: none; }
+.pills label {
+  padding: 0.42rem 1.05rem;
+  border: 1.5px solid rgba(74,37,53,0.28);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.pills input[type="radio"]:checked + label {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+
+.rsvp-btn {
+  width: 100%;
+  padding: 0.95rem;
+  background: var(--ink);
+  color: var(--cream);
+  border: none;
+  font-family: var(--fb);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  border-radius: 0;
+}
+.rsvp-btn:hover { background: var(--gold); color: var(--dark); transform: translateY(-1px); }
+
+/* ─── PHOTO UPLOAD ────────────────────────────────────── */
+.upload-sec {
+  background: linear-gradient(145deg, #1c0d04, #2a1406, #1a0c05);
+  border-top: 1px solid rgba(201,162,85,0.18);
+  border-bottom: 1px solid rgba(201,162,85,0.18);
+  padding: 6.5rem 1.5rem;
+  text-align: center;
+}
+.upload-inner { max-width: 580px; margin: 0 auto; }
+.upload-icon-wrap { font-size: 3.2rem; margin-bottom: 1.1rem; }
+.upload-sub {
+  font-family: var(--fh);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 1rem 0 2.25rem;
+}
+.upload-btn {
+  display: inline-block;
+  padding: 1.05rem 2.75rem;
+  background: var(--gold);
+  color: var(--dark);
+  font-family: var(--fb);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 8px 32px rgba(201,162,85,0.32);
+}
+.upload-btn:hover {
+  background: #dbb96a;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 42px rgba(201,162,85,0.45);
+}
+.upload-note {
+  margin-top: 1rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─── GALLERY ─────────────────────────────────────────── */
+.gallery-sec {
+  background: var(--dark-2);
+  padding: 5.5rem 1.5rem;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+  margin: 0 auto 1.75rem;
+  max-width: 900px;
+}
+@media (max-width: 540px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.gcard { display: flex; flex-direction: column; overflow: hidden; }
+.gph {
+  aspect-ratio: 4/5;
+  background: var(--dark);
+  border: 1px solid rgba(201,162,85,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gph-icon { width: 38px; opacity: 0.28; margin: 0 auto; }
+.glabel {
+  font-family: var(--fh);
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 0.5rem 0;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+.gallery-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ─── FOOTER ──────────────────────────────────────────── */
+.site-footer {
+  background: var(--dark);
+  border-top: 1px solid rgba(201,162,85,0.1);
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+}
+.footer-inner {
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footer-logo { width: 46px; opacity: 0.55; margin-bottom: 0.5rem; }
+.footer-names {
+  font-family: var(--fs);
+  font-size: 1.7rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.footer-date { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.07em; }
+.footer-contacts {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.footer-tel {
+  display: block;
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+.footer-map {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+.footer-copy {
+  margin-top: 1.75rem;
+  font-size: 0.65rem;
+  color: rgba(240,223,200,0.2);
+  letter-spacing: 0.07em;
+}
+
+/* ─── FLOATING RSVP FAB ───────────────────────────────── */
+.rsvp-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--gold);
+  color: var(--dark);
+  padding: 0.7rem 1.55rem;
+  font-family: var(--fb);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 100px;
+  box-shadow: 0 4px 20px rgba(201,162,85,0.38);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.3s, transform 0.3s, background 0.2s;
+  z-index: 200;
+  pointer-events: none;
+}
+.rsvp-fab.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.rsvp-fab:hover { background: #dbb96a; }
+</style>
+
+<!-- ════════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════════ -->
+<script>
+  // ── Countdown ──────────────────────────────────────────
+  const target = new Date('2026-09-13T07:00:00+05:30');
+
+  function tick() {
+    const diff = target.getTime() - Date.now();
+    if (diff <= 0) {
+      const el = document.getElementById('countdown');
+      if (el) el.innerHTML = '<p style="font-family:var(--fs);font-size:2rem;color:var(--gold)">It\'s the Big Day! 🎉</p>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    (document.getElementById('cd-d') as HTMLElement).textContent = String(d);
+    (document.getElementById('cd-h') as HTMLElement).textContent = pad(h);
+    (document.getElementById('cd-m') as HTMLElement).textContent = pad(m);
+    (document.getElementById('cd-s') as HTMLElement).textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ── Scroll reveal ──────────────────────────────────────
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── Floating RSVP FAB ──────────────────────────────────
+  const fab  = document.getElementById('rsvp-fab') as HTMLElement;
+  const hero = document.getElementById('hero') as HTMLElement;
+  function syncFab() {
+    fab.classList.toggle('show', window.scrollY > hero.offsetHeight * 0.55);
+  }
+  window.addEventListener('scroll', syncFab, { passive: true });
+  syncFab();
+</script>
