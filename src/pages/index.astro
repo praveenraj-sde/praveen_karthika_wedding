@@ -13,7 +13,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 
   <!-- ── Floating pills (appear on scroll) ─────────────── -->
   <a href="#upload" class="share-fab" id="share-fab" aria-label="Share Photos">📸 Share Photos</a>
-  <a href="#rsvp"   class="rsvp-fab"  id="rsvp-fab"  aria-label="Confirm Attendance">Confirm ✓</a>
+  <a href="#rsvp"   class="rsvp-fab"  id="rsvp-fab"  aria-label="Confirm Attendance">I'll Attend ✓</a>
 
   <!-- ══════════════════════════════════════════════════════
        1. HERO
@@ -55,9 +55,8 @@ const gcal = (text: string, start: string, end: string, details: string) =>
         <a href="#events" class="btn-outline">View Events ↓</a>
       </div>
 
-      <!-- Quick-access row -->
+      <!-- Quick-access row — Share Photos + Directions only -->
       <div class="hero-quick reveal rv5">
-        <a href="#rsvp"    class="hq-item"><span>✓</span><span>Confirm Attendance</span></a>
         <a href="#upload"  class="hq-item"><span>📸</span><span>Share Photos</span></a>
         <a href={MAPS} target="_blank" rel="noopener noreferrer" class="hq-item"><span>📍</span><span>Get Directions</span></a>
       </div>
@@ -312,7 +311,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   <!-- ══════════════════════════════════════════════════════
        5. GALLERY
   ══════════════════════════════════════════════════════ -->
-  <section class="gallery-sec" id="gallery">
+  <section class="gallery-sec" id="gallery" hidden style="display:none">
     <div class="sec-wrap" style="text-align:center">
       <p class="section-tag section-tag-muted reveal">Memories</p>
       <h2 class="section-heading section-heading-light reveal rv2">Our Story</h2>
@@ -359,7 +358,6 @@ const gcal = (text: string, start: string, end: string, details: string) =>
       <p class="footer-date">13th September 2026 · Kovilpatti</p>
       <div class="footer-contacts">
         <p>For enquiries:</p>
-        <a class="footer-tel" href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX (Bride's family)</a>
         <a class="footer-tel" href="tel:+916380609749">+91 63806 09749 (Praveen)</a>
       </div>
       <a href={MAPS} target="_blank" rel="noopener noreferrer" class="footer-map">📍 View Venue on Map</a>
@@ -541,10 +539,27 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 }
 .ev-venue-link {
   display: flex; align-items: flex-start; gap: 0.55rem;
-  text-decoration: none; transition: background 0.18s;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s;
 }
-.ev-venue-link:hover { background: rgba(201,162,85,0.12); }
-.ev-venue-pin { font-size: 1rem; padding-top: 0.1rem; flex-shrink: 0; }
+.ev-venue-link:hover {
+  background: rgba(201,162,85,0.15);
+  border-left-color: var(--gold);
+}
+.ev-venue-link:hover .ev-vname { text-decoration: underline; text-underline-offset: 2px; }
+.ev-venue-pin { font-size: 1.1rem; padding-top: 0.1rem; flex-shrink: 0; }
+/* "tap to open" hint on the venue link */
+.ev-venue-link::after {
+  content: '↗';
+  margin-left: auto;
+  align-self: center;
+  font-size: 0.8rem;
+  color: var(--gold);
+  opacity: 0.6;
+  padding-left: 0.5rem;
+  flex-shrink: 0;
+}
 .ev-vname { display: block; font-family: var(--fb); font-weight: 700; font-size: 0.88rem; color: var(--ink); }
 .ev-vaddr { display: block; font-size: 0.78rem; color: rgba(74,37,53,0.58); line-height: 1.55; margin-top: 0.25rem; }
 
@@ -599,12 +614,12 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   margin-bottom: 2.75rem;
 }
 .rsvp-sub strong { color: var(--text-light); font-style: normal; }
-.rsvp-card { background: var(--cream); padding: 2.5rem 2rem; text-align: left; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
-@media (max-width: 480px) { .rsvp-card { padding: 1.75rem 1.25rem; } }
+.rsvp-card { background: var(--cream); padding: 3rem 2.75rem; text-align: left; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+@media (max-width: 480px) { .rsvp-card { padding: 2rem 1.5rem; } }
 
 /* Form layout */
-.rsvp-form { display: flex; flex-direction: column; gap: 1.5rem; }
-.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.rsvp-form { display: flex; flex-direction: column; gap: 2rem; }
+.field { display: flex; flex-direction: column; gap: 0.55rem; }
 .flabel {
   font-family: var(--fb); font-size: 0.72rem; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink);
@@ -616,7 +631,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 .optional { font-weight: 400; letter-spacing: 0; text-transform: none; opacity: 0.55; font-size: 0.85em; }
 
 .finput {
-  width: 100%; padding: 0.75rem 1rem;
+  width: 100%; padding: 0.85rem 1.1rem;
   border: 1.5px solid rgba(74,37,53,0.2);
   background: #fff; font-family: var(--fb); font-size: 0.95rem; color: var(--ink);
   outline: none; -webkit-appearance: none; border-radius: 0;
@@ -640,7 +655,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 .pills { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.1rem; }
 .pills input[type="radio"] { display: none; }
 .pills label {
-  padding: 0.42rem 1.05rem;
+  padding: 0.5rem 1.2rem;
   border: 1.5px solid rgba(74,37,53,0.28); color: var(--ink);
   font-size: 0.78rem; font-weight: 600; cursor: pointer;
   border-radius: 100px;
@@ -855,7 +870,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   if (driveBtn && Date.now() < shareEnableDate.getTime()) {
     driveBtn.classList.add('upload-btn-disabled');
     driveBtn.removeAttribute('href');
-    shareFab.classList.add('upload-btn-disabled');
+    // Share FAB stays clickable — it scrolls to the section so guests can read the countdown
     if (uploadNote) {
       const daysLeft = Math.ceil((shareEnableDate.getTime() - Date.now()) / 86400000);
       uploadNote.textContent = `Uploads open from 5th September 2026 — ${daysLeft} day${daysLeft !== 1 ? 's' : ''} away`;
