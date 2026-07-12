@@ -1064,3 +1064,100 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   });
 
 </script>
+
+<!-- ════════════════════════════════════════════════════════
+     VISITOR ANALYTICS — silent, non-blocking, no consent UI needed
+     (collects only anonymous technical metadata, no PII)
+════════════════════════════════════════════════════════ -->
+<script is:inline>
+(function () {
+  var ENDPOINT   = '/.netlify/functions/analytics';
+  var STORAGE_KEY = 'pk_vid'; // pk = praveen-karthika
+
+  function uuidv4() {
+    try {
+      return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, function (c) {
+        return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+      });
+    } catch (_) {
+      // Fallback for very old browsers without crypto.getRandomValues
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+    }
+  }
+
+  function detectBrowser(ua) {
+    if (/Edg\//.test(ua))               return 'Edge';
+    if (/OPR\/|Opera/.test(ua))         return 'Opera';
+    if (/Chrome\//.test(ua))            return 'Chrome';
+    if (/Firefox\//.test(ua))           return 'Firefox';
+    if (/Safari\//.test(ua))            return 'Safari';
+    return 'Other';
+  }
+
+  function detectOS(ua) {
+    if (/Windows NT/.test(ua))          return 'Windows';
+    if (/Android/.test(ua))             return 'Android';
+    if (/iPhone|iPad|iPod/.test(ua))    return 'iOS';
+    if (/Mac OS X/.test(ua))            return 'macOS';
+    if (/Linux/.test(ua))               return 'Linux';
+    return 'Other';
+  }
+
+  function detectDevice(ua) {
+    if (/Tablet|iPad/.test(ua))                  return 'Tablet';
+    if (/Mobile|Android|iPhone|iPod/.test(ua))   return 'Mobile';
+    return 'Desktop';
+  }
+
+  function track() {
+    try {
+      var visitorId = null;
+      try {
+        visitorId = localStorage.getItem(STORAGE_KEY);
+        if (!visitorId) {
+          visitorId = uuidv4();
+          localStorage.setItem(STORAGE_KEY, visitorId);
+        }
+      } catch (_) {
+        visitorId = uuidv4(); // localStorage blocked (private mode) — still track the visit
+      }
+
+      var ua = navigator.userAgent || '';
+      var payload = {
+        type:       'analytics',
+        visitorId:  visitorId,
+        pageUrl:    (location.pathname + location.search).slice(0, 300),
+        pageTitle:  (document.title || '').slice(0, 200),
+        browser:    detectBrowser(ua),
+        os:         detectOS(ua),
+        device:     detectDevice(ua),
+        language:   (navigator.language || 'unknown').slice(0, 20),
+        timezone:   (Intl && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'unknown') || 'unknown',
+        resolution: (screen.width || 0) + 'x' + (screen.height || 0),
+        referrer:   (document.referrer || '').slice(0, 300),
+      };
+
+      // keepalive: true ensures the request completes even if the user navigates away immediately
+      fetch(ENDPOINT, {
+        method:    'POST',
+        headers:   { 'Content-Type': 'application/json' },
+        body:      JSON.stringify(payload),
+        keepalive: true,
+      }).catch(function () {}); // silently ignore network errors
+
+    } catch (_) {
+      // Never let analytics crash the page
+    }
+  }
+
+  // Defer tracking until the browser is idle — zero impact on page performance
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(track, { timeout: 3000 });
+  } else {
+    setTimeout(track, 1500);
+  }
+})();
+</script>
