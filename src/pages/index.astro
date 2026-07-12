@@ -161,117 +161,129 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 
         <!-- ── Form ─────────────────────────────────────────── -->
         <form id="rsvp-form" novalidate autocomplete="off">
-          <!-- Honeypot — bots fill this, humans don't -->
           <input type="text" name="_honeypot" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
-          <!-- Error banner -->
           <div class="form-error-banner" id="form-error" hidden role="alert">
             <span id="form-error-msg">Something went wrong. Please try again.</span>
           </div>
 
-          <!-- Name -->
-          <div class="field">
-            <label class="flabel" for="f-name">Full Name *</label>
-            <input class="finput" type="text" id="f-name" name="name"
-                   placeholder="Ramesh Kumar" required autocomplete="name" />
-            <span class="field-err" id="err-name"></span>
-          </div>
+          <!-- ─ Section 1: Contact details ───────────────────── -->
+          <div class="form-section">
+            <p class="form-section-label">Your Details</p>
 
-          <!-- Phone -->
-          <div class="field">
-            <label class="flabel" for="f-phone">Phone Number *</label>
-            <input class="finput" type="tel" id="f-phone" name="phone"
-                   placeholder="+91 98765 43210" required autocomplete="tel" />
-            <span class="field-err" id="err-phone"></span>
-          </div>
-
-          <!-- Engagement attendance -->
-          <div class="field">
-            <span class="flabel">Engagement <span class="field-date">(12th Sep · 7 PM)</span> *</span>
-            <div class="pills">
-              <input type="radio" id="eng-y" name="engagement" value="Yes" required />
-              <label for="eng-y">Attending 🎉</label>
-              <input type="radio" id="eng-n" name="engagement" value="No" />
-              <label for="eng-n">Can't make it</label>
+            <div class="field">
+              <label class="flabel" for="f-name">Full Name *</label>
+              <input class="finput" type="text" id="f-name" name="name"
+                     placeholder="Ramesh Kumar" required autocomplete="name" />
+              <span class="field-err" id="err-name"></span>
             </div>
-            <span class="field-err" id="err-engagement"></span>
-          </div>
 
-          <!-- Wedding attendance -->
-          <div class="field">
-            <span class="flabel">Wedding <span class="field-date">(13th Sep · 7 AM)</span> *</span>
-            <div class="pills">
-              <input type="radio" id="wed-y" name="wedding" value="Yes" />
-              <label for="wed-y">Attending 🎉</label>
-              <input type="radio" id="wed-n" name="wedding" value="No" />
-              <label for="wed-n">Can't make it</label>
-            </div>
-            <span class="field-err" id="err-wedding"></span>
-          </div>
-
-          <!-- Number of Guests -->
-          <div class="field">
-            <label class="flabel" for="f-guests">Number of Guests <span class="optional">(including yourself)</span></label>
-            <div class="select-wrap">
-              <select class="finput fselect" id="f-guests" name="guests">
-                <option value="">Select count…</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="custom">More than 10 — enter below ↓</option>
-              </select>
-            </div>
-            <input class="finput" type="number" id="f-guests-custom" name="guests_custom"
-                   placeholder="Enter exact number (e.g. 14)" min="11" max="500"
-                   style="display:none; margin-top:0.5rem" />
-          </div>
-
-          <!-- Category -->
-          <div class="field">
-            <span class="flabel">You are... *</span>
-            <div class="pills">
-              <input type="radio" id="cat-bride" name="category" value="Bride's Friend/Family" required />
-              <label for="cat-bride">Bride's Friend / Family</label>
-              <input type="radio" id="cat-groom" name="category" value="Groom's Friend/Family" />
-              <label for="cat-groom">Groom's Friend / Family</label>
-            </div>
-            <span class="field-err" id="err-category"></span>
-          </div>
-
-          <!-- Transport to venue -->
-          <div class="field">
-            <span class="flabel">Transport to Venue Required?</span>
-            <div class="pills">
-              <input type="radio" id="trans-y" name="transport" value="Yes" />
-              <label for="trans-y">Yes please</label>
-              <input type="radio" id="trans-n" name="transport" value="No" checked />
-              <label for="trans-n">No, I'll manage</label>
+            <div class="field">
+              <label class="flabel" for="f-phone">Phone Number *</label>
+              <input class="finput" type="tel" id="f-phone" name="phone"
+                     placeholder="+91 98765 43210" required autocomplete="tel" />
+              <span class="field-err" id="err-phone"></span>
             </div>
           </div>
 
-          <!-- Room Arrangements -->
-          <div class="field">
-            <span class="flabel">Room Arrangements Needed?</span>
-            <div class="pills">
-              <input type="radio" id="r-y" name="room" value="Yes" />
-              <label for="r-y">Yes</label>
-              <input type="radio" id="r-n" name="room" value="No" checked />
-              <label for="r-n">No</label>
+          <!-- ─ Section 2: Attendance ─────────────────────────── -->
+          <div class="form-section">
+            <p class="form-section-label">Your Attendance</p>
+
+            <div class="field">
+              <span class="flabel">Engagement <span class="field-date">(12th Sep · 7 PM)</span> *</span>
+              <div class="pills">
+                <input type="radio" id="eng-y" name="engagement" value="Yes" required />
+                <label for="eng-y">Attending 🎉</label>
+                <input type="radio" id="eng-n" name="engagement" value="No" />
+                <label for="eng-n">Can't make it</label>
+              </div>
+              <span class="field-err" id="err-engagement"></span>
+            </div>
+
+            <div class="field">
+              <span class="flabel">Wedding <span class="field-date">(13th Sep · 7 AM)</span> *</span>
+              <div class="pills">
+                <input type="radio" id="wed-y" name="wedding" value="Yes" />
+                <label for="wed-y">Attending 🎉</label>
+                <input type="radio" id="wed-n" name="wedding" value="No" />
+                <label for="wed-n">Can't make it</label>
+              </div>
+              <span class="field-err" id="err-wedding"></span>
             </div>
           </div>
 
-          <!-- Message -->
-          <div class="field">
-            <label class="flabel" for="f-msg">Message for the Couple <span class="optional">(optional)</span></label>
-            <textarea class="finput ftarea" id="f-msg" name="message" rows="3"
-                      placeholder="Write a blessing or a warm message…"></textarea>
+          <!-- ─ Section 3: Party details ──────────────────────── -->
+          <div class="form-section">
+            <p class="form-section-label">Your Party</p>
+
+            <div class="field">
+              <label class="flabel" for="f-guests">Number of Guests <span class="optional">(including yourself)</span></label>
+              <div class="select-wrap">
+                <select class="finput fselect" id="f-guests" name="guests">
+                  <option value="">Select count…</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="custom">More than 10 — enter below ↓</option>
+                </select>
+              </div>
+              <input class="finput" type="number" id="f-guests-custom" name="guests_custom"
+                     placeholder="Enter exact number (e.g. 14)" min="11" max="500"
+                     style="display:none; margin-top:0.65rem" />
+            </div>
+
+            <div class="field">
+              <span class="flabel">You are... *</span>
+              <div class="pills">
+                <input type="radio" id="cat-bride" name="category" value="Bride's Friend/Family" required />
+                <label for="cat-bride">Bride's Friend / Family</label>
+                <input type="radio" id="cat-groom" name="category" value="Groom's Friend/Family" />
+                <label for="cat-groom">Groom's Friend / Family</label>
+              </div>
+              <span class="field-err" id="err-category"></span>
+            </div>
+          </div>
+
+          <!-- ─ Section 4: Logistics ──────────────────────────── -->
+          <div class="form-section">
+            <p class="form-section-label">Arrangements</p>
+
+            <div class="field">
+              <span class="flabel">Transport to Venue Required?</span>
+              <div class="pills">
+                <input type="radio" id="trans-y" name="transport" value="Yes" />
+                <label for="trans-y">Yes please</label>
+                <input type="radio" id="trans-n" name="transport" value="No" checked />
+                <label for="trans-n">No, I'll manage</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <span class="flabel">Room Arrangements Needed?</span>
+              <div class="pills">
+                <input type="radio" id="r-y" name="room" value="Yes" />
+                <label for="r-y">Yes</label>
+                <input type="radio" id="r-n" name="room" value="No" checked />
+                <label for="r-n">No</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- ─ Section 5: Message ────────────────────────────── -->
+          <div class="form-section">
+            <div class="field">
+              <label class="flabel" for="f-msg">Message for the Couple <span class="optional">(optional)</span></label>
+              <textarea class="finput ftarea" id="f-msg" name="message" rows="4"
+                        placeholder="Write a blessing or a warm message…"></textarea>
+            </div>
           </div>
 
           <!-- Submit -->
@@ -600,7 +612,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   white-space: nowrap; pointer-events: none; user-select: none; line-height: 1;
 }
 .rsvp-bg-accent::before { content: 'Join Us'; }
-.rsvp-wrap { max-width: 580px; position: relative; z-index: 1; }
+.rsvp-wrap { max-width: 660px; position: relative; z-index: 1; }
 .rsvp-heading {
   font-family: var(--fs);
   font-size: clamp(2.8rem, 8vw, 4.5rem);
@@ -614,21 +626,48 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   margin-bottom: 2.75rem;
 }
 .rsvp-sub strong { color: var(--text-light); font-style: normal; }
-.rsvp-card { background: var(--cream); padding: 3rem 2.75rem; text-align: left; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
-@media (max-width: 480px) { .rsvp-card { padding: 2rem 1.5rem; } }
+.rsvp-card {
+  background: var(--cream);
+  padding: 2.75rem;
+  text-align: left;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+@media (max-width: 520px) { .rsvp-card { padding: 1.5rem; } }
 
 /* Form layout */
-.rsvp-form { display: flex; flex-direction: column; gap: 2rem; }
-.field { display: flex; flex-direction: column; gap: 0.55rem; }
+.rsvp-form { display: flex; flex-direction: column; gap: 1rem; }
+
+/* Section blocks — white cards on cream background */
+.form-section {
+  background: #fff;
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  border-left: 3px solid rgba(201,162,85,0.3);
+}
+@media (max-width: 520px) { .form-section { padding: 1.4rem 1.25rem; } }
+
+.form-section-label {
+  font-family: var(--fh);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.1rem;
+}
+
+.field { display: flex; flex-direction: column; gap: 0.6rem; }
 .flabel {
-  font-family: var(--fb); font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink);
+  font-family: var(--fb); font-size: 0.76rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink);
 }
 .field-date {
   font-weight: 400; letter-spacing: 0; text-transform: none;
-  opacity: 0.58; font-size: 0.85em;
+  opacity: 0.55; font-size: 0.88em;
 }
-.optional { font-weight: 400; letter-spacing: 0; text-transform: none; opacity: 0.55; font-size: 0.85em; }
+.optional { font-weight: 400; letter-spacing: 0; text-transform: none; opacity: 0.5; font-size: 0.88em; }
 
 .finput {
   width: 100%; padding: 0.85rem 1.1rem;
@@ -652,12 +691,12 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 .fselect { cursor: pointer; padding-right: 2.2rem; }
 
 /* Pills */
-.pills { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.1rem; }
+.pills { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.15rem; }
 .pills input[type="radio"] { display: none; }
 .pills label {
-  padding: 0.5rem 1.2rem;
-  border: 1.5px solid rgba(74,37,53,0.28); color: var(--ink);
-  font-size: 0.78rem; font-weight: 600; cursor: pointer;
+  padding: 0.6rem 1.35rem;
+  border: 1.5px solid rgba(74,37,53,0.25); color: var(--ink);
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
   border-radius: 100px;
   transition: background 0.18s, color 0.18s, border-color 0.18s;
   -webkit-tap-highlight-color: transparent; user-select: none;
