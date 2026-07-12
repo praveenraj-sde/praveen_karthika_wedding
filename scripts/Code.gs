@@ -14,6 +14,7 @@ var SUMMARY_SHEET   = 'Summary';
 // Analytics
 var VISITORS_SHEET  = 'Visitors';
 var VISITS_SHEET    = 'Visits';
+var EVENTS_SHEET    = 'Events';
 var DASHBOARD_SHEET = 'Dashboard';
 
 // ── Column headers ─────────────────────────────────────────────────
@@ -35,6 +36,8 @@ var VISIT_HEADERS = [
   'Browser', 'OS', 'Device', 'Language', 'Timezone',
   'Screen Resolution', 'Referrer'
 ];
+
+var EVENT_HEADERS = ['Timestamp', 'Visitor ID', 'Event Name'];
 
 // ══════════════════════════════════════════════════════════════════
 // SHARED UTILITIES
@@ -73,9 +76,8 @@ function doPost(e) {
   }
 
   // Route by type
-  if (data.type === 'analytics') {
-    return handleAnalytics(data);
-  }
+  if (data.type === 'analytics') return handleAnalytics(data);
+  if (data.type === 'event')     return handleEvent(data);
   return handleRsvp(data);
 }
 
@@ -228,6 +230,37 @@ function handleAnalytics(data) {
 }
 
 // ══════════════════════════════════════════════════════════════════
+// EVENT CLICK HANDLER
+// ══════════════════════════════════════════════════════════════════
+
+function handleEvent(data) {
+  try {
+    var visitorId = sanitize(data.visitorId, 36);
+    var eventName = sanitize(data.event, 60);
+
+    if (!visitorId || visitorId.length < 32) {
+      return jsonOut({ success: false, error: 'Invalid visitor ID' });
+    }
+    if (!eventName) {
+      return jsonOut({ success: false, error: 'Missing event name' });
+    }
+
+    var ss          = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var eventsSheet = ss.getSheetByName(EVENTS_SHEET);
+    if (!eventsSheet) {
+      return jsonOut({ success: false, error: 'Events sheet not found. Run setupAnalyticsSheets() first.' });
+    }
+
+    eventsSheet.appendRow([new Date(), visitorId, eventName]);
+    return jsonOut({ success: true });
+
+  } catch (err) {
+    Logger.log('Event error: ' + err.toString());
+    return jsonOut({ success: false, error: 'Event tracking error' });
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
 // SETUP — run manually once from the editor
 // ══════════════════════════════════════════════════════════════════
 
@@ -270,6 +303,16 @@ function setupAnalyticsSheets() {
     vth.setBackground('#1a3a2a').setFontColor('#e8f5e9').setFontWeight('bold').setFontSize(11);
     visits.setFrozenRows(1);
     [160,220,280,200,100,100,100,100,150,120,280].forEach(function(w,i){ visits.setColumnWidth(i+1,w); });
+  }
+
+  // ── Events sheet ───────────────────────────────────────────────
+  var evSheet = ss.getSheetByName(EVENTS_SHEET) || ss.insertSheet(EVENTS_SHEET);
+  if (evSheet.getLastRow() === 0) {
+    var evh = evSheet.getRange(1, 1, 1, EVENT_HEADERS.length);
+    evh.setValues([EVENT_HEADERS]);
+    evh.setBackground('#1a3a2a').setFontColor('#e8f5e9').setFontWeight('bold').setFontSize(11);
+    evSheet.setFrozenRows(1);
+    [160, 220, 220].forEach(function(w,i){ evSheet.setColumnWidth(i+1,w); });
   }
 
   // ── Dashboard sheet ────────────────────────────────────────────
@@ -380,6 +423,25 @@ function _buildDashboard(ss) {
   db.getRange(dRow + 1, 1, 1, 2).setValues([['Device', 'Visits']]).setFontWeight('bold');
   ['Desktop', 'Mobile', 'Tablet'].forEach(function(d, i) {
     db.getRange(dRow + 2 + i, 1, 1, 2).setValues([[d, '=COUNTIF(Visits!G$2:G$10000,"' + d + '")']]);
+  });
+
+  // ── Section E: Click Events ─────────────────────────────────────
+  var eRow = dRow + 7;
+  db.getRange(eRow, 1).setValue('CLICK EVENTS');
+  db.getRange(eRow, 1, 1, 2).setBackground('#1a3a2a').setFontColor('#e8f5e9').setFontWeight('bold');
+  db.getRange(eRow + 1, 1, 1, 2).setValues([['Event', 'Count']]).setFontWeight('bold');
+  var eventRows = [
+    ['Get Directions (hero)',         'get_directions'],
+    ['Venue Map — Engagement',        'venue_map_engagement'],
+    ['Venue Map — Wedding',           'venue_map_wedding'],
+    ['Google Calendar — Engagement',  'calendar_google_engagement'],
+    ['Apple Calendar — Engagement',   'calendar_apple_engagement'],
+    ['Google Calendar — Wedding',     'calendar_google_wedding'],
+    ['Apple Calendar — Wedding',      'calendar_apple_wedding'],
+    ['View Map (footer)',              'footer_view_map'],
+  ];
+  eventRows.forEach(function(ev, i) {
+    db.getRange(eRow + 2 + i, 1, 1, 2).setValues([[ev[0], '=COUNTIF(Events!C$2:C$10000,"' + ev[1] + '")']]);
   });
 
   // ── Styling ─────────────────────────────────────────────────────

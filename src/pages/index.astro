@@ -57,7 +57,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
       <!-- Quick-access row — Share Photos + Directions only -->
       <div class="hero-quick reveal rv5">
         <a href="#upload"  class="hq-item"><span>📸</span><span>Share Photos</span></a>
-        <a href={MAPS} target="_blank" rel="noopener noreferrer" class="hq-item"><span>📍</span><span>Get Directions</span></a>
+        <a href={MAPS} target="_blank" rel="noopener noreferrer" class="hq-item" data-track="get_directions"><span>📍</span><span>Get Directions</span></a>
       </div>
     </div>
 
@@ -85,7 +85,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
           <p class="ev-date">Saturday, 12th September 2026</p>
           <p class="ev-time">7:00 PM – 8:00 PM</p>
 
-          <a href={MAPS} target="_blank" rel="noopener noreferrer" class="ev-venue ev-venue-link">
+          <a href={MAPS} target="_blank" rel="noopener noreferrer" class="ev-venue ev-venue-link" data-track="venue_map_engagement">
             <span class="ev-venue-pin">📍</span>
             <span>
               <span class="ev-vname">Sathyabama Kalyana Mandapam</span>
@@ -95,10 +95,10 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 
           <div class="ev-actions">
             <a href={gcal('Praveen & Karthika – Engagement','20260912T133000Z','20260912T143000Z','Engagement ceremony. Time: 7:00 PM – 8:00 PM IST')}
-               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-cal">
+               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-cal" data-track="calendar_google_engagement">
               📅 Google Calendar
             </a>
-            <a href="/wedding/events.ics" download class="ev-btn ev-btn-cal">
+            <a href="/wedding/events.ics" download class="ev-btn ev-btn-cal" data-track="calendar_apple_engagement">
               📱 Apple Calendar
             </a>
           </div>
@@ -111,7 +111,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
           <p class="ev-date">Sunday, 13th September 2026</p>
           <p class="ev-time">Muhurtham: 7:00 AM – 9:00 AM</p>
 
-          <a href={MAPS} target="_blank" rel="noopener noreferrer" class="ev-venue ev-venue-link">
+          <a href={MAPS} target="_blank" rel="noopener noreferrer" class="ev-venue ev-venue-link" data-track="venue_map_wedding">
             <span class="ev-venue-pin">📍</span>
             <span>
               <span class="ev-vname">Sathyabama Kalyana Mandapam</span>
@@ -121,10 +121,10 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 
           <div class="ev-actions">
             <a href={gcal('Praveen & Karthika – Wedding','20260913T013000Z','20260913T033000Z','Wedding ceremony. Muhurtham: 7:00 AM – 9:00 AM IST')}
-               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-cal">
+               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-cal" data-track="calendar_google_wedding">
               📅 Google Calendar
             </a>
-            <a href="/wedding/events.ics" download class="ev-btn ev-btn-cal">
+            <a href="/wedding/events.ics" download class="ev-btn ev-btn-cal" data-track="calendar_apple_wedding">
               📱 Apple Calendar
             </a>
           </div>
@@ -371,7 +371,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
         <p>For enquiries:</p>
         <a class="footer-tel" href="tel:+916380609749">+91 63806 09749 (Praveen)</a>
       </div>
-      <a href={MAPS} target="_blank" rel="noopener noreferrer" class="footer-map">📍 View Venue on Map</a>
+      <a href={MAPS} target="_blank" rel="noopener noreferrer" class="footer-map" data-track="footer_view_map">📍 View Venue on Map</a>
       <p class="footer-copy">Made with love · Praveen &amp; Karthika · 2026</p>
     </div>
   </footer>
@@ -1071,16 +1071,16 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 ════════════════════════════════════════════════════════ -->
 <script is:inline>
 (function () {
-  var ENDPOINT   = '/.netlify/functions/analytics';
-  var STORAGE_KEY = 'pk_vid'; // pk = praveen-karthika
+  var ENDPOINT    = '/.netlify/functions/analytics';
+  var STORAGE_KEY = 'pk_vid';
 
+  // ── Visitor ID ───────────────────────────────────────────────────
   function uuidv4() {
     try {
       return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, function (c) {
         return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
       });
     } catch (_) {
-      // Fallback for very old browsers without crypto.getRandomValues
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0;
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
@@ -1088,47 +1088,58 @@ const gcal = (text: string, start: string, end: string, details: string) =>
     }
   }
 
+  function getVisitorId() {
+    try {
+      var id = localStorage.getItem(STORAGE_KEY);
+      if (!id) { id = uuidv4(); localStorage.setItem(STORAGE_KEY, id); }
+      return id;
+    } catch (_) {
+      return uuidv4(); // localStorage blocked (private/incognito) — still track
+    }
+  }
+
+  // ── Device detection ─────────────────────────────────────────────
   function detectBrowser(ua) {
-    if (/Edg\//.test(ua))               return 'Edge';
-    if (/OPR\/|Opera/.test(ua))         return 'Opera';
-    if (/Chrome\//.test(ua))            return 'Chrome';
-    if (/Firefox\//.test(ua))           return 'Firefox';
-    if (/Safari\//.test(ua))            return 'Safari';
+    if (/Edg\//.test(ua))             return 'Edge';
+    if (/OPR\/|Opera/.test(ua))       return 'Opera';
+    if (/Chrome\//.test(ua))          return 'Chrome';
+    if (/Firefox\//.test(ua))         return 'Firefox';
+    if (/Safari\//.test(ua))          return 'Safari';
     return 'Other';
   }
-
   function detectOS(ua) {
-    if (/Windows NT/.test(ua))          return 'Windows';
-    if (/Android/.test(ua))             return 'Android';
-    if (/iPhone|iPad|iPod/.test(ua))    return 'iOS';
-    if (/Mac OS X/.test(ua))            return 'macOS';
-    if (/Linux/.test(ua))               return 'Linux';
+    if (/Windows NT/.test(ua))        return 'Windows';
+    if (/Android/.test(ua))           return 'Android';
+    if (/iPhone|iPad|iPod/.test(ua))  return 'iOS';
+    if (/Mac OS X/.test(ua))          return 'macOS';
+    if (/Linux/.test(ua))             return 'Linux';
     return 'Other';
   }
-
   function detectDevice(ua) {
-    if (/Tablet|iPad/.test(ua))                  return 'Tablet';
-    if (/Mobile|Android|iPhone|iPod/.test(ua))   return 'Mobile';
+    if (/Tablet|iPad/.test(ua))               return 'Tablet';
+    if (/Mobile|Android|iPhone|iPod/.test(ua)) return 'Mobile';
     return 'Desktop';
   }
 
-  function track() {
+  // ── Core send helper ─────────────────────────────────────────────
+  function post(payload) {
     try {
-      var visitorId = null;
-      try {
-        visitorId = localStorage.getItem(STORAGE_KEY);
-        if (!visitorId) {
-          visitorId = uuidv4();
-          localStorage.setItem(STORAGE_KEY, visitorId);
-        }
-      } catch (_) {
-        visitorId = uuidv4(); // localStorage blocked (private mode) — still track the visit
-      }
+      fetch(ENDPOINT, {
+        method:    'POST',
+        headers:   { 'Content-Type': 'application/json' },
+        body:      JSON.stringify(payload),
+        keepalive: true,
+      }).catch(function () {});
+    } catch (_) {}
+  }
 
+  // ── Page-load tracking ───────────────────────────────────────────
+  function trackPageView() {
+    try {
       var ua = navigator.userAgent || '';
-      var payload = {
+      post({
         type:       'analytics',
-        visitorId:  visitorId,
+        visitorId:  getVisitorId(),
         pageUrl:    (location.pathname + location.search).slice(0, 300),
         pageTitle:  (document.title || '').slice(0, 200),
         browser:    detectBrowser(ua),
@@ -1138,26 +1149,28 @@ const gcal = (text: string, start: string, end: string, details: string) =>
         timezone:   (Intl && Intl.DateTimeFormat ? Intl.DateTimeFormat().resolvedOptions().timeZone : 'unknown') || 'unknown',
         resolution: (screen.width || 0) + 'x' + (screen.height || 0),
         referrer:   (document.referrer || '').slice(0, 300),
-      };
-
-      // keepalive: true ensures the request completes even if the user navigates away immediately
-      fetch(ENDPOINT, {
-        method:    'POST',
-        headers:   { 'Content-Type': 'application/json' },
-        body:      JSON.stringify(payload),
-        keepalive: true,
-      }).catch(function () {}); // silently ignore network errors
-
-    } catch (_) {
-      // Never let analytics crash the page
-    }
+      });
+    } catch (_) {}
   }
 
-  // Defer tracking until the browser is idle — zero impact on page performance
+  // ── Click-event tracking ─────────────────────────────────────────
+  function trackEvent(eventName) {
+    post({ type: 'event', visitorId: getVisitorId(), event: eventName });
+  }
+
+  // Event delegation — catches clicks on any element with data-track
+  document.addEventListener('click', function (e) {
+    try {
+      var el = e.target && e.target.closest ? e.target.closest('[data-track]') : null;
+      if (el) trackEvent(el.getAttribute('data-track'));
+    } catch (_) {}
+  }, { passive: true });
+
+  // Defer page-view tracking until browser is idle — zero render impact
   if (typeof requestIdleCallback !== 'undefined') {
-    requestIdleCallback(track, { timeout: 3000 });
+    requestIdleCallback(trackPageView, { timeout: 3000 });
   } else {
-    setTimeout(track, 1500);
+    setTimeout(trackPageView, 1500);
   }
 })();
 </script>
