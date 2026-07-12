@@ -35,10 +35,27 @@ export const handler = async (event) => {
 
     const text = await gasRes.text();
 
+    // GAS sometimes returns an HTML error page instead of JSON
+    // (e.g. "Script function not found: doPost" when not deployed correctly)
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch (_) {
+      console.error('GAS returned non-JSON:', text.slice(0, 300));
+      return {
+        statusCode: 502,
+        headers: { ...CORS, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          success: false,
+          error: 'Backend not ready — please try again shortly',
+        }),
+      };
+    }
+
     return {
       statusCode: 200,
       headers: { ...CORS, 'Content-Type': 'application/json' },
-      body: text,
+      body: JSON.stringify(parsed),
     };
   } catch (err) {
     console.error('RSVP proxy error:', err);
