@@ -2,8 +2,7 @@
 import WeddingLayout from '../layouts/WeddingLayout.astro';
 import '../styles/global.css';
 
-const MAPS   = 'https://maps.app.goo.gl/4SZqfbVj2TdEzto46';
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbz7rE1PaMqUNLQY1Sv5VlRs4u2PwAn8WIcBtYSeUldoN0xu9CoTOSGDgpPLohMK2tBwbw/exec';
+const MAPS = 'https://maps.app.goo.gl/4SZqfbVj2TdEzto46';
 
 const gcal = (text: string, start: string, end: string, details: string) =>
   `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${start}%2F${end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent('Sathyabama Kalyana Mandapam, SH-44, 26/99, Ettayapuram Road, Kovilpatti – 628501')}`;
@@ -863,7 +862,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 <!-- ════════════════════════════════════════════════════════
      CLIENT SCRIPTS
 ════════════════════════════════════════════════════════ -->
-<script define:vars={{ GAS_URL }}>
+<script>
 
   // ── Countdown ───────────────────────────────────────────
   const target = new Date('2026-09-13T07:00:00+05:30');
@@ -1028,10 +1027,9 @@ const gcal = (text: string, start: string, end: string, details: string) =>
     setLoading(true);
 
     try {
-      const res = await fetch(GAS_URL, {
+      const res = await fetch('/.netlify/functions/rsvp', {
         method: 'POST',
-        // text/plain avoids CORS preflight — GAS doesn't handle OPTIONS
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
