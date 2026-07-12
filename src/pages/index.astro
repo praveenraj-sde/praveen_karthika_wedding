@@ -2,20 +2,24 @@
 import WeddingLayout from '../layouts/WeddingLayout.astro';
 import '../styles/global.css';
 
+const MAPS = 'https://maps.app.goo.gl/4SZqfbVj2TdEzto46';
+
 const gcal = (text: string, start: string, end: string, details: string) =>
   `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(text)}&dates=${start}%2F${end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent('Sathyabama Kalyana Mandapam, SH-44, 26/99, Ettayapuram Road, Kovilpatti – 628501')}`;
 ---
 
 <WeddingLayout>
 
-  <!-- ── Floating RSVP pill ───────────────────────────────── -->
-  <a href="#rsvp" class="rsvp-fab" id="rsvp-fab" aria-label="RSVP">RSVP</a>
+  <!-- ── Floating pills (appear on scroll) ─────────────── -->
+  <!-- #8 Share the Moment pill -->
+  <a href="#upload" class="share-fab" id="share-fab" aria-label="Share Photos">📸 Share Photos</a>
+  <!-- #9 "Confirm Attendance" instead of "RSVP" -->
+  <a href="#rsvp" class="rsvp-fab" id="rsvp-fab" aria-label="Confirm Attendance">Confirm ✓</a>
 
   <!-- ══════════════════════════════════════════════════════
        1. HERO
   ══════════════════════════════════════════════════════ -->
   <section class="hero" id="hero">
-    <!-- Left: text -->
     <div class="hero-text">
       <img src="/wedding/elements/pk-logo-brown.png" class="hero-logo reveal" alt="PK monogram" />
 
@@ -47,13 +51,26 @@ const gcal = (text: string, start: string, end: string, details: string) =>
         <div class="cu"><span class="cn" id="cd-s">--</span><span class="cl">Sec</span></div>
       </div>
 
+      <!-- #9 CTA renamed -->
       <div class="hero-cta reveal rv5">
-        <a href="#rsvp" class="btn-gold">RSVP Now</a>
+        <a href="#rsvp" class="btn-gold">Confirm Attendance</a>
         <a href="#events" class="btn-outline">View Events ↓</a>
+      </div>
+
+      <!-- #8 Quick-access row — key actions visible on first screen -->
+      <div class="hero-quick reveal rv5">
+        <a href="#rsvp" class="hq-item">
+          <span>✓</span><span>Confirm Attendance</span>
+        </a>
+        <a href="#upload" class="hq-item">
+          <span>📸</span><span>Share Photos</span>
+        </a>
+        <a href={MAPS} target="_blank" rel="noopener noreferrer" class="hq-item">
+          <span>📍</span><span>Get Directions</span>
+        </a>
       </div>
     </div>
 
-    <!-- Right: couple art -->
     <div class="hero-art" aria-hidden="true">
       <img src="/wedding/couple-pencil-art-brown.png" alt="Praveen &amp; Karthika" />
     </div>
@@ -77,21 +94,24 @@ const gcal = (text: string, start: string, end: string, details: string) =>
           <h3 class="ev-title">Engagement</h3>
           <p class="ev-date">Saturday, 12th September 2026</p>
           <p class="ev-time">7:00 PM – 8:00 PM</p>
-          <div class="ev-venue">
-            <p class="ev-vname">Sathyabama Kalyana Mandapam</p>
-            <p class="ev-vaddr">SH-44, 26/99, Ettayapuram Road<br />Kovilpatti – 628501, Tamilnadu</p>
-          </div>
+
+          <!-- #3 Venue is now a clickable Maps link -->
+          <a href={MAPS} target="_blank" rel="noopener noreferrer" class="ev-venue ev-venue-link">
+            <span class="ev-venue-pin">📍</span>
+            <span>
+              <span class="ev-vname">Sathyabama Kalyana Mandapam</span>
+              <span class="ev-vaddr">SH-44, 26/99, Ettayapuram Road<br />Kovilpatti – 628501, Tamilnadu</span>
+            </span>
+          </a>
+
           <div class="ev-actions">
             <a href={gcal('Praveen & Karthika – Engagement','20260912T133000Z','20260912T143000Z','Engagement ceremony. Time: 7:00 PM – 8:00 PM IST')}
                target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-cal">
               📅 Google Calendar
             </a>
+            <!-- #2 Renamed from "Apple / Outlook (.ics)" -->
             <a href="/wedding/events.ics" download class="ev-btn ev-btn-cal">
-              ⬇ Apple / Outlook (.ics)
-            </a>
-            <a href="https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
-               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-map">
-              📍 Open in Maps
+              📱 Apple Calendar / Outlook
             </a>
           </div>
         </article>
@@ -102,21 +122,24 @@ const gcal = (text: string, start: string, end: string, details: string) =>
           <h3 class="ev-title">Wedding</h3>
           <p class="ev-date">Sunday, 13th September 2026</p>
           <p class="ev-time">Muhurtham: 7:00 AM – 9:00 AM</p>
-          <div class="ev-venue">
-            <p class="ev-vname">Sathyabama Kalyana Mandapam</p>
-            <p class="ev-vaddr">SH-44, 26/99, Ettayapuram Road<br />Kovilpatti – 628501, Tamilnadu</p>
-          </div>
+
+          <!-- #3 Venue is now a clickable Maps link -->
+          <a href={MAPS} target="_blank" rel="noopener noreferrer" class="ev-venue ev-venue-link">
+            <span class="ev-venue-pin">📍</span>
+            <span>
+              <span class="ev-vname">Sathyabama Kalyana Mandapam</span>
+              <span class="ev-vaddr">SH-44, 26/99, Ettayapuram Road<br />Kovilpatti – 628501, Tamilnadu</span>
+            </span>
+          </a>
+
           <div class="ev-actions">
             <a href={gcal('Praveen & Karthika – Wedding','20260913T013000Z','20260913T033000Z','Wedding ceremony. Muhurtham: 7:00 AM – 9:00 AM IST')}
                target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-cal">
               📅 Google Calendar
             </a>
+            <!-- #2 Renamed -->
             <a href="/wedding/events.ics" download class="ev-btn ev-btn-cal">
-              ⬇ Apple / Outlook (.ics)
-            </a>
-            <a href="https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
-               target="_blank" rel="noopener noreferrer" class="ev-btn ev-btn-map">
-              📍 Open in Maps
+              📱 Apple Calendar / Outlook
             </a>
           </div>
         </article>
@@ -125,14 +148,15 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   </section>
 
   <!-- ══════════════════════════════════════════════════════
-       3. RSVP  — MOST PROMINENT
+       3. CONFIRM ATTENDANCE (RSVP) — PROMINENT
   ══════════════════════════════════════════════════════ -->
   <section class="rsvp-sec" id="rsvp">
     <div class="rsvp-bg-accent" aria-hidden="true"></div>
     <div class="sec-wrap rsvp-wrap">
       <p class="section-tag section-tag-muted reveal">You're Invited</p>
       <h2 class="rsvp-heading reveal rv2">Will You Join Us?</h2>
-      <p class="rsvp-sub reveal rv3">Please respond by <strong>1st August 2026</strong></p>
+      <!-- #4 Updated deadline text -->
+      <p class="rsvp-sub reveal rv3">Please respond at the <strong>earliest possible</strong> — by <strong>30th August 2026</strong></p>
 
       <div class="rsvp-card reveal rv3">
         <form
@@ -146,32 +170,37 @@ const gcal = (text: string, start: string, end: string, details: string) =>
           <input type="hidden" name="form-name" value="rsvp" />
           <p class="bot-trap"><label>Skip: <input name="bot-field" /></label></p>
 
-          <!-- Name -->
           <div class="field">
             <label class="flabel" for="f-name">Full Name *</label>
             <input class="finput" type="text" id="f-name" name="name" placeholder="Ramesh Kumar" required />
           </div>
 
-          <!-- Phone -->
           <div class="field">
             <label class="flabel" for="f-phone">Phone Number *</label>
             <input class="finput" type="tel" id="f-phone" name="phone" placeholder="+91 98765 43210" required />
           </div>
 
-          <!-- Attending -->
+          <!-- #5 Split into Engagement + Wedding attendance -->
           <div class="field">
-            <span class="flabel">Will You Attend? *</span>
+            <span class="flabel">Engagement <span class="field-date">(12th Sep · 7 PM)</span></span>
             <div class="pills">
-              <input type="radio" id="att-y" name="attending" value="Yes — I'll be there!" required />
-              <label for="att-y">Yes 🎉</label>
-              <input type="radio" id="att-m" name="attending" value="Maybe" />
-              <label for="att-m">Maybe</label>
-              <input type="radio" id="att-n" name="attending" value="Can't make it" />
-              <label for="att-n">Can't make it</label>
+              <input type="radio" id="eng-y" name="engagement" value="Yes" required />
+              <label for="eng-y">Attending 🎉</label>
+              <input type="radio" id="eng-n" name="engagement" value="No" />
+              <label for="eng-n">Can't make it</label>
             </div>
           </div>
 
-          <!-- Guest count -->
+          <div class="field">
+            <span class="flabel">Wedding <span class="field-date">(13th Sep · 7 AM)</span></span>
+            <div class="pills">
+              <input type="radio" id="wed-y" name="wedding" value="Yes" />
+              <label for="wed-y">Attending 🎉</label>
+              <input type="radio" id="wed-n" name="wedding" value="No" />
+              <label for="wed-n">Can't make it</label>
+            </div>
+          </div>
+
           <div class="field">
             <span class="flabel">Family Members Coming</span>
             <div class="pills">
@@ -183,7 +212,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
             </div>
           </div>
 
-          <!-- Room arrangements -->
+          <!-- #6 Room arrangements — default No (already correct) -->
           <div class="field">
             <span class="flabel">Room Arrangements Needed?</span>
             <div class="pills">
@@ -192,7 +221,6 @@ const gcal = (text: string, start: string, end: string, details: string) =>
             </div>
           </div>
 
-          <!-- Message -->
           <div class="field">
             <label class="flabel" for="f-msg">Message for the Couple <span class="optional">(optional)</span></label>
             <textarea class="finput ftarea" id="f-msg" name="message" rows="3" placeholder="Write a blessing or message…"></textarea>
@@ -205,7 +233,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   </section>
 
   <!-- ══════════════════════════════════════════════════════
-       4. PHOTO UPLOAD  — PROMINENTLY PLACED
+       4. SHARE THE MOMENT — PROMINENT
   ══════════════════════════════════════════════════════ -->
   <section class="upload-sec" id="upload">
     <div class="upload-inner">
@@ -215,6 +243,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
         Captured something beautiful at the celebration?<br />
         Upload your photos &amp; videos — let's build our shared memory together.
       </p>
+      <!-- #10 Button is disabled until 5 Sep 2026 (1 week before engagement) -->
       <a
         href="#"
         id="drive-link"
@@ -224,6 +253,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
       >
         Upload Photos &amp; Videos ↗
       </a>
+      <!-- #10 Note updated by JS with exact days remaining -->
       <p class="upload-note reveal rv5">Link will go live on the day of the event</p>
     </div>
   </section>
@@ -279,14 +309,10 @@ const gcal = (text: string, start: string, end: string, details: string) =>
       <div class="footer-contacts">
         <p>For enquiries:</p>
         <a class="footer-tel" href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX (Bride's family)</a>
-        <a class="footer-tel" href="tel:+91XXXXXXXXXX">+91 XXXXX XXXXX (Groom's family)</a>
+        <!-- #1 Praveen's contact number -->
+        <a class="footer-tel" href="tel:+916380609749">+91 63806 09749 (Praveen)</a>
       </div>
-      <a
-        href="https://maps.app.goo.gl/4SZqfbVj2TdEzto46"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="footer-map"
-      >📍 View Venue on Map</a>
+      <a href={MAPS} target="_blank" rel="noopener noreferrer" class="footer-map">📍 View Venue on Map</a>
       <p class="footer-copy">Made with love · Praveen &amp; Karthika · 2026</p>
     </div>
   </footer>
@@ -328,11 +354,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   letter-spacing: 0.06em;
 }
 
-.hero-names {
-  display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
-}
+.hero-names { display: flex; flex-direction: column; gap: 0.05rem; }
 
 .hname {
   font-family: var(--fs);
@@ -352,11 +374,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   color: var(--gold);
   margin: 0.3rem 0 0.35rem;
 }
-.weds-line {
-  flex: 1; max-width: 36px;
-  height: 1px;
-  background: rgba(201,162,85,0.45);
-}
+.weds-line { flex: 1; max-width: 36px; height: 1px; background: rgba(201,162,85,0.45); }
 
 .hero-meta { display: flex; flex-direction: column; gap: 0.3rem; }
 .hero-divi { width: 96px; opacity: 0.45; }
@@ -367,11 +385,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   color: var(--gold);
   letter-spacing: 0.04em;
 }
-.hero-venue {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
-}
+.hero-venue { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.04em; }
 
 /* Countdown */
 .countdown { display: flex; align-items: center; gap: 0.45rem; }
@@ -382,27 +396,9 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   padding: 0.6rem 0.85rem;
   min-width: 54px;
 }
-.cn {
-  font-family: var(--fh);
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-}
-.cl {
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-top: 0.18rem;
-}
-.cs {
-  font-size: 1.3rem;
-  color: var(--gold);
-  opacity: 0.45;
-  line-height: 1;
-  margin-bottom: 0.9rem;
-}
+.cn { font-family: var(--fh); font-size: 1.55rem; font-weight: 700; color: var(--gold); line-height: 1; }
+.cl { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.18rem; }
+.cs { font-size: 1.3rem; color: var(--gold); opacity: 0.45; line-height: 1; margin-bottom: 0.9rem; }
 
 /* CTA buttons */
 .hero-cta { display: flex; gap: 0.9rem; flex-wrap: wrap; }
@@ -432,6 +428,28 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   transition: border-color 0.2s, color 0.2s;
 }
 .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+/* #8 Quick-access row */
+.hero-quick {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin-top: -0.2rem;
+}
+.hq-item {
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid rgba(201,162,85,0.2);
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  transition: border-color 0.2s, color 0.2s;
+}
+.hq-item:hover { border-color: var(--gold); color: var(--gold); }
 
 /* Hero art panel */
 .hero-art {
@@ -468,7 +486,6 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   z-index: 0;
 }
 
-/* Scroll hint */
 .scroll-hint {
   position: absolute;
   bottom: 1.75rem;
@@ -487,33 +504,17 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 
 /* Mobile hero */
 @media (max-width: 768px) {
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-  .hero-text {
-    padding: 5.5rem 1.5rem 2.5rem;
-    order: 1;
-    gap: 1.1rem;
-  }
-  .hero-art {
-    order: 2;
-    height: 58vw;
-    min-height: 250px;
-    max-height: 420px;
-  }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-text { padding: 5.5rem 1.5rem 2.5rem; order: 1; gap: 1.1rem; }
+  .hero-art { order: 2; height: 58vw; min-height: 250px; max-height: 420px; }
   .hero-art::before { display: none; }
-  .hero-art img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 15%;
-    opacity: 0.72;
-  }
+  .hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; opacity: 0.72; }
   .hname { font-size: clamp(2.6rem, 12vw, 3.6rem); }
   .countdown { gap: 0.28rem; }
   .cu { min-width: 46px; padding: 0.5rem 0.6rem; }
   .cn { font-size: 1.25rem; }
+  .hero-quick { gap: 0.4rem; }
+  .hq-item { font-size: 0.65rem; padding: 0.35rem 0.65rem; }
 }
 
 /* ─── EVENTS ──────────────────────────────────────────── */
@@ -552,13 +553,10 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   line-height: 1.05;
   margin-bottom: 0.3rem;
 }
-.ev-date {
-  font-family: var(--fb);
-  font-weight: 600;
-  font-size: 0.92rem;
-  color: var(--ink);
-}
+.ev-date { font-family: var(--fb); font-weight: 600; font-size: 0.92rem; color: var(--ink); }
 .ev-time { font-size: 0.82rem; color: rgba(74,37,53,0.6); }
+
+/* #3 Venue as clickable Maps link */
 .ev-venue {
   margin: 0.85rem 0;
   padding: 0.75rem;
@@ -566,8 +564,17 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   border-left: 2px solid rgba(201,162,85,0.35);
   text-align: left;
 }
-.ev-vname { font-family: var(--fb); font-weight: 700; font-size: 0.88rem; color: var(--ink); }
-.ev-vaddr { font-size: 0.78rem; color: rgba(74,37,53,0.58); line-height: 1.55; margin-top: 0.25rem; }
+.ev-venue-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  text-decoration: none;
+  transition: background 0.18s;
+}
+.ev-venue-link:hover { background: rgba(201,162,85,0.12); }
+.ev-venue-pin { font-size: 1rem; padding-top: 0.1rem; flex-shrink: 0; }
+.ev-vname { display: block; font-family: var(--fb); font-weight: 700; font-size: 0.88rem; color: var(--ink); }
+.ev-vaddr { display: block; font-size: 0.78rem; color: rgba(74,37,53,0.58); line-height: 1.55; margin-top: 0.25rem; }
 
 .ev-actions { display: flex; flex-direction: column; gap: 0.55rem; margin-top: auto; }
 .ev-btn {
@@ -580,17 +587,8 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   text-align: center;
   transition: background 0.18s, color 0.18s;
 }
-.ev-btn-cal {
-  border: 1.5px solid rgba(74,37,53,0.3);
-  color: var(--ink);
-}
+.ev-btn-cal { border: 1.5px solid rgba(74,37,53,0.3); color: var(--ink); }
 .ev-btn-cal:hover { background: var(--ink); color: var(--cream); }
-.ev-btn-map {
-  background: var(--ink);
-  color: var(--cream);
-  border: 1.5px solid var(--ink);
-}
-.ev-btn-map:hover { background: var(--gold); border-color: var(--gold); color: var(--dark); }
 
 /* ─── RSVP ────────────────────────────────────────────── */
 .rsvp-sec {
@@ -615,7 +613,6 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   background: linear-gradient(to right, transparent, var(--gold), transparent);
 }
 
-/* Large decorative text behind heading */
 .rsvp-bg-accent {
   position: absolute;
   top: 50%;
@@ -629,7 +626,8 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   user-select: none;
   line-height: 1;
 }
-.rsvp-bg-accent::before { content: 'RSVP'; }
+/* #9 Decorative watermark renamed */
+.rsvp-bg-accent::before { content: 'Join Us'; }
 
 .rsvp-wrap { max-width: 580px; position: relative; z-index: 1; }
 
@@ -670,6 +668,14 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   text-transform: uppercase;
   color: var(--ink);
 }
+/* #5 Date hint in field label */
+.field-date {
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 0.58;
+  font-size: 0.85em;
+}
 .optional { font-weight: 400; letter-spacing: 0; text-transform: none; opacity: 0.55; font-size: 0.85em; }
 
 .finput {
@@ -688,7 +694,6 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 .finput:focus { border-color: var(--gold); }
 .ftarea { resize: vertical; min-height: 85px; }
 
-/* Pill radio buttons */
 .pills { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.1rem; }
 .pills input[type="radio"] { display: none; }
 .pills label {
@@ -765,16 +770,23 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 }
 .upload-note {
   margin-top: 1rem;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   font-style: italic;
 }
 
-/* ─── GALLERY ─────────────────────────────────────────── */
-.gallery-sec {
-  background: var(--dark-2);
-  padding: 5.5rem 1.5rem;
+/* #10 Disabled state for Share button (before 5 Sep 2026) */
+.upload-btn-disabled {
+  background: rgba(201,162,85,0.15) !important;
+  color: rgba(201,162,85,0.45) !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  transform: none !important;
+  pointer-events: none;
 }
+
+/* ─── GALLERY ─────────────────────────────────────────── */
+.gallery-sec { background: var(--dark-2); padding: 5.5rem 1.5rem; }
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -789,9 +801,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   aspect-ratio: 4/5;
   background: var(--dark);
   border: 1px solid rgba(201,162,85,0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
 }
 .gph-icon { width: 38px; opacity: 0.28; margin: 0 auto; }
 .glabel {
@@ -803,12 +813,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   letter-spacing: 0.05em;
   text-align: center;
 }
-.gallery-note {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-style: italic;
-  text-align: center;
-}
+.gallery-note { font-size: 0.8rem; color: var(--text-muted); font-style: italic; text-align: center; }
 
 /* ─── FOOTER ──────────────────────────────────────────── */
 .site-footer {
@@ -820,49 +825,23 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 .footer-inner {
   max-width: 420px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
 }
 .footer-logo { width: 46px; opacity: 0.55; margin-bottom: 0.5rem; }
-.footer-names {
-  font-family: var(--fs);
-  font-size: 1.7rem;
-  color: var(--gold);
-  line-height: 1;
-}
+.footer-names { font-family: var(--fs); font-size: 1.7rem; color: var(--gold); line-height: 1; }
 .footer-date { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.07em; }
 .footer-contacts {
   margin-top: 0.75rem;
   font-size: 0.8rem;
   color: var(--text-muted);
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  display: flex; flex-direction: column; gap: 0.2rem;
 }
-.footer-tel {
-  display: block;
-  color: var(--text-light);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.88rem;
-}
-.footer-map {
-  margin-top: 0.5rem;
-  font-size: 0.78rem;
-  color: var(--gold);
-  text-decoration: none;
-  letter-spacing: 0.04em;
-}
-.footer-copy {
-  margin-top: 1.75rem;
-  font-size: 0.65rem;
-  color: rgba(240,223,200,0.2);
-  letter-spacing: 0.07em;
-}
+.footer-tel { display: block; color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 0.88rem; }
+.footer-map { margin-top: 0.5rem; font-size: 0.78rem; color: var(--gold); text-decoration: none; letter-spacing: 0.04em; }
+.footer-copy { margin-top: 1.75rem; font-size: 0.65rem; color: rgba(240,223,200,0.2); letter-spacing: 0.07em; }
 
-/* ─── FLOATING RSVP FAB ───────────────────────────────── */
+/* ─── FLOATING PILLS ─────────────────────────────────── */
+/* #9 Renamed RSVP → Confirm */
 .rsvp-fab {
   position: fixed;
   bottom: 1.5rem;
@@ -873,7 +852,7 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   font-family: var(--fb);
   font-weight: 700;
   font-size: 0.75rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
   border-radius: 100px;
@@ -886,6 +865,38 @@ const gcal = (text: string, start: string, end: string, details: string) =>
 }
 .rsvp-fab.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 .rsvp-fab:hover { background: #dbb96a; }
+
+/* #7 Share the Moment floating pill */
+.share-fab {
+  position: fixed;
+  bottom: 4.5rem;
+  right: 1.5rem;
+  background: var(--dark-3);
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  padding: 0.65rem 1.3rem;
+  font-family: var(--fb);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 100px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 200;
+  pointer-events: none;
+}
+.share-fab.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.share-fab:hover { background: var(--gold-dim); }
+/* #10 Disabled share fab */
+.share-fab.upload-btn-disabled {
+  color: rgba(201,162,85,0.35) !important;
+  border-color: rgba(201,162,85,0.2) !important;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 </style>
 
 <!-- ════════════════════════════════════════════════════════
@@ -921,12 +932,34 @@ const gcal = (text: string, start: string, end: string, details: string) =>
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // ── Floating RSVP FAB ──────────────────────────────────
-  const fab  = document.getElementById('rsvp-fab') as HTMLElement;
-  const hero = document.getElementById('hero') as HTMLElement;
-  function syncFab() {
-    fab.classList.toggle('show', window.scrollY > hero.offsetHeight * 0.55);
+  // ── Floating pills (both FABs show together) ───────────
+  const fab      = document.getElementById('rsvp-fab') as HTMLElement;
+  const shareFab = document.getElementById('share-fab') as HTMLElement;
+  const hero     = document.getElementById('hero') as HTMLElement;
+  function syncFabs() {
+    const show = window.scrollY > hero.offsetHeight * 0.55;
+    fab.classList.toggle('show', show);
+    shareFab.classList.toggle('show', show);
   }
-  window.addEventListener('scroll', syncFab, { passive: true });
-  syncFab();
+  window.addEventListener('scroll', syncFabs, { passive: true });
+  syncFabs();
+
+  // ── #10 Share the Moment date gate ─────────────────────
+  // Button becomes active 1 week before engagement (5 Sep 2026 IST)
+  const shareEnableDate = new Date('2026-09-05T00:00:00+05:30');
+  const driveBtn   = document.getElementById('drive-link') as HTMLAnchorElement;
+  const uploadNote = document.querySelector('.upload-note') as HTMLElement;
+
+  if (driveBtn) {
+    const isOpen = Date.now() >= shareEnableDate.getTime();
+    if (!isOpen) {
+      driveBtn.classList.add('upload-btn-disabled');
+      driveBtn.removeAttribute('href');
+      shareFab.classList.add('upload-btn-disabled');
+      if (uploadNote) {
+        const daysLeft = Math.ceil((shareEnableDate.getTime() - Date.now()) / 86400000);
+        uploadNote.textContent = `Uploads open from 5th September 2026 — ${daysLeft} day${daysLeft !== 1 ? 's' : ''} away`;
+      }
+    }
+  }
 </script>
