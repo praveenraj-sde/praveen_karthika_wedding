@@ -107,7 +107,6 @@ function handleRsvp(data) {
     if (phone.replace(/\D/g,'').length < 7)     errors.push('Valid phone number is required');
     if (!engagement)                            errors.push('Engagement attendance is required');
     if (!wedding)                               errors.push('Wedding attendance is required');
-    if (!category)                              errors.push('Please let us know your relation');
 
     if (errors.length > 0) {
       return jsonOut({ success: false, error: errors.join('. ') });

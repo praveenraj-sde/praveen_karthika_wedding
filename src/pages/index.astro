@@ -210,6 +210,16 @@ const gcal = (text: string, start: string, end: string, details: string) =>
               </div>
               <span class="field-err" id="err-wedding"></span>
             </div>
+
+            <div class="field">
+              <span class="flabel">Room Arrangements Needed?</span>
+              <div class="pills">
+                <input type="radio" id="r-y" name="room" value="Yes" />
+                <label for="r-y">Yes</label>
+                <input type="radio" id="r-n" name="room" value="No" checked />
+                <label for="r-n">No</label>
+              </div>
+            </div>
           </div>
 
           <!-- ─ Section 3: Party details ──────────────────────── -->
@@ -239,41 +249,6 @@ const gcal = (text: string, start: string, end: string, details: string) =>
                      style="display:none; margin-top:0.65rem" />
             </div>
 
-            <div class="field">
-              <span class="flabel">You are... *</span>
-              <div class="pills">
-                <input type="radio" id="cat-bride" name="category" value="Bride's Friend/Family" required />
-                <label for="cat-bride">Bride's Friend / Family</label>
-                <input type="radio" id="cat-groom" name="category" value="Groom's Friend/Family" />
-                <label for="cat-groom">Groom's Friend / Family</label>
-              </div>
-              <span class="field-err" id="err-category"></span>
-            </div>
-          </div>
-
-          <!-- ─ Section 4: Logistics ──────────────────────────── -->
-          <div class="form-section">
-            <p class="form-section-label">Arrangements</p>
-
-            <div class="field">
-              <span class="flabel">Transport to Venue Required?</span>
-              <div class="pills">
-                <input type="radio" id="trans-y" name="transport" value="Yes" />
-                <label for="trans-y">Yes please</label>
-                <input type="radio" id="trans-n" name="transport" value="No" checked />
-                <label for="trans-n">No, I'll manage</label>
-              </div>
-            </div>
-
-            <div class="field">
-              <span class="flabel">Room Arrangements Needed?</span>
-              <div class="pills">
-                <input type="radio" id="r-y" name="room" value="Yes" />
-                <label for="r-y">Yes</label>
-                <input type="radio" id="r-n" name="room" value="No" checked />
-                <label for="r-n">No</label>
-              </div>
-            </div>
           </div>
 
           <!-- ─ Section 5: Message ────────────────────────────── -->
@@ -978,10 +953,6 @@ const gcal = (text: string, start: string, end: string, details: string) =>
       showFieldErr('err-wedding', 'Please select your Wedding attendance');
       ok = false;
     }
-    if (!d.category) {
-      showFieldErr('err-category', "Please let us know if you're from the bride's or groom's side");
-      ok = false;
-    }
     return ok;
   }
 
@@ -1009,8 +980,6 @@ const gcal = (text: string, start: string, end: string, details: string) =>
       engagement:   (fd.get('engagement') || '').toString().trim(),
       wedding:      (fd.get('wedding')    || '').toString().trim(),
       guests:       guests.toString().trim(),
-      category:     (fd.get('category')   || '').toString().trim(),
-      transport:    (fd.get('transport')  || '').toString().trim(),
       room:         (fd.get('room')       || '').toString().trim(),
       message:      (fd.get('message')    || '').toString().trim(),
       _honeypot:    (fd.get('_honeypot')  || '').toString(),
